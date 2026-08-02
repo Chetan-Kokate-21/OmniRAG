@@ -10,13 +10,14 @@ from sqlalchemy.ext.asyncio import (
 
 from app.config.settings import settings
 
-# Create Async SQLAlchemy Engine
 engine = create_async_engine(
     settings.database_url,
     echo=settings.debug,
+    connect_args={
+        "ssl": True
+    },
 )
 
-# Create Session Factory
 AsyncSessionLocal = async_sessionmaker(
     bind=engine,
     class_=AsyncSession,
