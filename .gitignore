@@ -1,0 +1,31 @@
+# Python
+backend/.venv/
+backend/__pycache__/
+backend/**/*.pyc
+
+# Environment
+backend/.env
+
+# Uploads
+backend/uploads/
+
+# ChromaDB
+backend/chroma/
+backend/chroma-db/
+backend/chroma_db/
+
+# Cache
+backend/.pytest_cache/
+
+# Node
+frontend/node_modules/
+
+# React
+frontend/dist/
+
+# VSCode
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
