@@ -1,19 +1,25 @@
-from app.ai.vectorstore.chroma_client import ChromaClient
+from pinecone import Pinecone
+
+from app.config.settings import settings
 
 
 class VectorStore:
     """
-    ChromaDB wrapper.
+    Pinecone vector database wrapper.
     """
 
     def __init__(
         self,
-        collection_name: str = "documents",
+        index_name: str | None = None,
     ):
-        self.client = ChromaClient.get_client()
+        self.index_name = index_name or settings.pinecone_index_name
 
-        self.collection = self.client.get_or_create_collection(
-            name=collection_name,
+        self.client = Pinecone(
+            api_key=settings.pinecone_api_key
+        )
+
+        self.index = self.client.Index(
+            self.index_name
         )
 
     def add_documents(
@@ -23,11 +29,22 @@ class VectorStore:
         embeddings: list[list[float]],
         metadatas: list[dict],
     ):
-        self.collection.add(
-            ids=ids,
-            documents=documents,
-            embeddings=embeddings,
-            metadatas=metadatas,
+        vectors = []
+
+        for i in range(len(ids)):
+            vectors.append(
+                {
+                    "id": ids[i],
+                    "values": embeddings[i],
+                    "metadata": {
+                        **metadatas[i],
+                        "text": documents[i],
+                    },
+                }
+            )
+
+        self.index.upsert(
+            vectors=vectors
         )
 
     def search(
@@ -37,35 +54,41 @@ class VectorStore:
         document_id: str,
         n_results: int = 5,
     ):
-        return self.collection.query(
-            query_embeddings=[query_embedding],
-            n_results=n_results,
-            where={
+        result = self.index.query(
+            vector=query_embedding,
+            top_k=n_results,
+            include_metadata=True,
+            include_values=False,
+            filter={
                 "$and": [
                     {
-                        "user_id": user_id,
+                        "user_id": {
+                            "$eq": user_id
+                        }
                     },
                     {
-                        "document_id": document_id,
+                        "document_id": {
+                            "$eq": document_id
+                        }
                     },
-                ],
+                ]
             },
-            include=[
-                "documents",
-                "metadatas",
-                "distances",
-            ],
         )
+
+        return result
 
     def delete_document(
         self,
         document_id: str,
     ):
         """
-        Delete all chunks belonging to a document.
+        Delete all vectors belonging to a document.
         """
-        self.collection.delete(
-            where={
-                "document_id": document_id,
+
+        self.index.delete(
+            filter={
+                "document_id": {
+                    "$eq": document_id
+                }
             }
         )

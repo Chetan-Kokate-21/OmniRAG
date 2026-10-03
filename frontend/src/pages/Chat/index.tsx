@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Send } from "lucide-react";
+import ReactMarkdown from "react-markdown";
 
 import api from "../../lib/axios";
 
@@ -51,6 +52,11 @@ export default function Chat() {
     setLoading(true);
 
     try {
+      if (!documentId) {
+        alert("No document selected.");
+        return;
+      }
+
       const response = await api.post("/chat", {
         session_id: "demo-session",
         document_id: documentId,
@@ -117,7 +123,9 @@ export default function Chat() {
                     : "bg-slate-900 text-slate-300"
                 }`}
               >
+                <ReactMarkdown>
                 {message.content}
+                </ReactMarkdown>
               </div>
 
             </div>

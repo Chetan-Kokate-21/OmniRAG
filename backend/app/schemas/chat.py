@@ -8,6 +8,11 @@ class ChatRequest(BaseModel):
     )
 
     document_id: str = Field(
+    ...,
+    description="ID of the document to query",
+    )
+
+    document_id: str = Field(
         ...,
         description="Selected document ID",
     )

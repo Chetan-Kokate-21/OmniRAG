@@ -38,7 +38,7 @@ const steps = [
   },
   {
     icon: Database,
-    title: "ChromaDB",
+    title: "pinecone",
     description:
       "Embeddings are stored for semantic search.",
   },

@@ -25,7 +25,7 @@ export default function Hero() {
 
         <p className="mt-8 max-w-3xl text-xl leading-8 text-slate-400">
           OmniRAG combines FastAPI, PostgreSQL,
-          ChromaDB and Gemini to provide secure,
+          Pinecone and Gemini to provide secure,
           multi-user Retrieval-Augmented Generation.
         </p>
 
@@ -52,7 +52,7 @@ export default function Hero() {
 
   <div>
     <h2 className="text-4xl font-bold text-green-400">
-      ChromaDB
+      Pinecone
     </h2>
     <p className="text-slate-400">
       Vector DB

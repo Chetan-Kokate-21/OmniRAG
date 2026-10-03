@@ -20,7 +20,7 @@ const technologies = [
   },
   {
     icon: Boxes,
-    title: "ChromaDB",
+    title: "Pinecone",
     description: "Vector Store",
   },
   {

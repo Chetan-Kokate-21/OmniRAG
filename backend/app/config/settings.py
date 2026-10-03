@@ -25,8 +25,10 @@ class Settings(BaseSettings):
 
     mistral_api_key: str = ""
 
+    pinecone_api_key: str = ""
+    pinecone_index_name: str = ""
     embedding_model: str
-
+    embedding_dimension: int = 768
     model_config = SettingsConfigDict(
         env_file=".env",
         extra="ignore"

@@ -79,7 +79,7 @@ class DocumentService:
             metadatas=metadatas,
         )
 
-        print(f"Stored {len(chunks)} chunks in ChromaDB")
+        print(f"Stored {len(chunks)} chunks in Pinecone")
 
         return document
 
@@ -100,7 +100,7 @@ class DocumentService:
         current_user: User,
     ) -> None:
         """
-        Delete document from database, ChromaDB and local storage.
+        Delete document from database, Pinecone and local storage.
         """
 
         document = await self.repository.get_by_id(
@@ -121,7 +121,7 @@ class DocumentService:
         if file_path.exists():
             file_path.unlink()
 
-        # Delete vectors from ChromaDB
+        # Delete vectors from Pinecone
         self.vector_store.delete_document(
             str(document.id)
         )

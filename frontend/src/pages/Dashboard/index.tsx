@@ -39,7 +39,7 @@ export default function Dashboard() {
 
         <StatsCard
           title="Vector DB"
-          value="ChromaDB"
+          value="Pinecone"
           subtitle="Semantic Search"
         />
 

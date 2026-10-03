@@ -14,12 +14,12 @@ class RAGService:
         self.llm = LLMService()
 
     def answer(
-        self,
-        user_id: str,
-        document_id: str,
-        question: str,
-        top_k: int = 5,
-    ):
+    self,
+    user_id: str,
+    document_id: str,
+    question: str,
+    top_k: int = 5,
+):
         retrieved = self.retriever.retrieve(
             query=question,
             user_id=user_id,

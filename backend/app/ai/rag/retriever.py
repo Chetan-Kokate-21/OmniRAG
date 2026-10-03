@@ -4,7 +4,7 @@ from app.ai.vectorstore.vector_store import VectorStore
 
 class Retriever:
     """
-    Retrieve relevant chunks from ChromaDB.
+    Retrieve relevant chunks from Pinecone.
     """
 
     def __init__(self):
@@ -18,7 +18,9 @@ class Retriever:
         document_id: str,
         top_k: int = 5,
     ):
-        query_embedding = self.embedding_service.embed_query(query)
+        query_embedding = self.embedding_service.embed_query(
+            query
+        )
 
         results = self.vector_store.search(
             query_embedding=query_embedding,
@@ -27,22 +29,31 @@ class Retriever:
             n_results=top_k,
         )
 
-        documents = results["documents"][0]
-        metadatas = results["metadatas"][0]
-        distances = results["distances"][0]
+        matches = getattr(results, "matches", [])
 
         formatted_results = []
 
-        for document, metadata, distance in zip(
-            documents,
-            metadatas,
-            distances,
-        ):
+        for match in matches:
+            metadata = dict(
+                getattr(match, "metadata", {}) or {}
+            )
+
+            content = metadata.pop(
+                "text",
+                ""
+            )
+
+            score = getattr(
+                match,
+                "score",
+                0.0
+            )
+
             formatted_results.append(
                 {
-                    "content": document,
+                    "content": content,
                     "metadata": metadata,
-                    "score": round(1 - distance, 4),
+                    "score": round(float(score), 4),
                 }
             )
 

@@ -5,6 +5,7 @@ from app.ai.embeddings.embedding_service import EmbeddingService
 from app.ai.loaders.pdf_loader import PDFLoader
 
 
+
 class DocumentProcessor:
     """
     Complete document processing pipeline.
@@ -31,6 +32,9 @@ class DocumentProcessor:
 
         # Step 3
         embeddings = self.embedding_service.embed_documents(chunks)
+
+        print(f"Total chunks: {len(chunks)}")
+        print(f"Total embeddings: {len(embeddings)}")
 
         return {
         "text": text,

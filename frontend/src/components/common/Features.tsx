@@ -20,7 +20,7 @@ const features = [
     icon: Search,
     title: "Semantic Search",
     description:
-      "ChromaDB retrieves the most relevant chunks using vector similarity.",
+      "Pinecone retrieves the most relevant chunks using vector similarity.",
   },
   {
     icon: BrainCircuit,

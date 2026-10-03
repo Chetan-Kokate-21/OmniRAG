@@ -9,12 +9,12 @@ class ChatService:
         self.conversation = ConversationService()
 
     def ask(
-        self,
-        session_id: str,
-        user_id: str,
-        document_id: str,
-        question: str,
-        top_k: int = 5,
+    self,
+    session_id: str,
+    user_id: str,
+    document_id: str,
+    question: str,
+    top_k: int = 5,
     ):
         self.conversation.add_message(
             session_id=session_id,

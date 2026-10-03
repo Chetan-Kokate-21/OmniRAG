@@ -20,9 +20,9 @@ def chat(
     current_user: User = Depends(get_current_user),
 ):
     return chat_service.ask(
-        session_id=request.session_id,
-        user_id=str(current_user.id),
-        document_id=request.document_id,
-        question=request.question,
-        top_k=request.top_k,
-    )
+    session_id=request.session_id,
+    user_id=str(current_user.id),
+    document_id=request.document_id,
+    question=request.question,
+    top_k=request.top_k,
+)
