@@ -31,7 +31,7 @@ export default function Register() {
       navigate("/login");
 
     } catch {
-      setError("Registration failed. Please try again.");
+      setError("Registration failed. Check the browser console for details.");
     } finally {
       setLoading(false);
     }
@@ -70,6 +70,7 @@ export default function Register() {
             label="Password"
             type="password"
             placeholder="Create a password"
+            minLength={3}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
