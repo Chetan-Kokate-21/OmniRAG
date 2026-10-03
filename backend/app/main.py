@@ -29,6 +29,7 @@ app = FastAPI(
 
 origins = [
     "http://localhost:5173",
+    "https://omni-rag-ten.vercel.app",
 ]
 
 app.add_middleware(
